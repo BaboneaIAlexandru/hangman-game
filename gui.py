@@ -1,6 +1,13 @@
 import customtkinter as ctk
+import sys
+from os import path
 from PIL import Image
 from engine import choose_word
+
+def resource_path(relative_path):
+    if hasattr(sys,'_MEIPASS'):
+        return path.join(sys._MEIPASS,relative_path)
+    return path.join(path.abspath("."),relative_path)
 
 class App(ctk.CTk):
     def __init__(self):
@@ -11,7 +18,7 @@ class App(ctk.CTk):
         self.resizable(False,False)
 
         ctk.set_appearance_mode("system")
-        ctk.set_default_color_theme("assets/themes/lavender.json")
+        ctk.set_default_color_theme(resource_path("assets/themes/lavender.json"))
 
         self.difficulties=["Easy","Medium","Hard"]
         self.wrong_answers=0
@@ -52,8 +59,8 @@ class App(ctk.CTk):
 
         self.label_sprites=ctk.CTkLabel(self.frame_sprites,text="",
             image=ctk.CTkImage(
-            light_image=Image.open(f"assets/lightmode_sprites/{self.wrong_answers}.png"),
-            dark_image=Image.open(f"assets/darkmode_sprites/{self.wrong_answers}.png"),
+            light_image=Image.open(resource_path(f"assets/lightmode_sprites/{self.wrong_answers}.png")),
+            dark_image=Image.open(resource_path(f"assets/darkmode_sprites/{self.wrong_answers}.png")),
             size=(300,300)),
             width=400,height=300)
         self.label_sprites.pack()
@@ -85,8 +92,8 @@ class App(ctk.CTk):
         
     def update_sprite(self):
         new_sprite=ctk.CTkImage(
-            light_image=Image.open(f"assets/lightmode_sprites/{self.wrong_answers}.png"),
-            dark_image=Image.open(f"assets/darkmode_sprites/{self.wrong_answers}.png"),
+            light_image=Image.open(resource_path(f"assets/lightmode_sprites/{self.wrong_answers}.png")),
+            dark_image=Image.open(resource_path(f"assets/darkmode_sprites/{self.wrong_answers}.png")),
             size=(300,300)
         )
         self.label_sprites.configure(image=new_sprite)
