@@ -18,10 +18,6 @@ A modern, minimalist Hangman desktop game built with Python and CustomTkinter, f
 
 ## How to Run
 
-### Option 1: Download .EXE (Recommended)
-Go to the **Releases** section on the right side of this page and download the executable file.
-
-### Option 2: Run from Source
 1. Install dependencies:
    ```bash
    pip install -r requirements.txt
