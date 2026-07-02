@@ -14,7 +14,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.geometry("400x600")
-        self.title("Hangman game")
+        self.title("Hangman Game")
         self.resizable(False,False)
 
         ctk.set_appearance_mode("system")
@@ -35,6 +35,8 @@ class App(ctk.CTk):
 
         self.setup_ui()
         self.start_new_game()
+
+        self.bind("<Key>",self.physical_key_pressed)
         
 
     def setup_ui(self):
@@ -74,7 +76,7 @@ class App(ctk.CTk):
             if i==0:
                 frame_row.pack(pady=(50,6))
             else:
-                frame_row.pack(pady=6) 
+                frame_row.pack(pady=6)
 
             for key in row:
                 btn=ctk.CTkButton(
@@ -124,6 +126,9 @@ class App(ctk.CTk):
         self.update_word_display()
 
     def pressed_key(self,letter):
+        if self.key_buttons[letter].cget("state")=="disabled":
+            return
+
         self.key_buttons[letter].configure(state="disabled")
 
         if letter in self.word:
@@ -151,6 +156,11 @@ class App(ctk.CTk):
     def disable_keys(self):
         for btn in self.key_buttons.values():
             btn.configure(state="disabled")
+    
+    def physical_key_pressed(self,event):
+        key=event.char.upper()
+        if key in self.key_buttons:
+            self.pressed_key(key)
 
 app=App()
 if __name__=="__main__":
